@@ -1,0 +1,50 @@
+1.Devices
+    -id*
+    -name*
+2.Operation systems
+    -id*
+    -os*
+    -version*
+3.Applications
+    -id*
+    -application name*
+    -version*
+4.Exceptions
+    -id;*
+    -exception;?
+    -class;?
+    -massage;
+5.applicationusers
+    -id-uid;-Unique
+    -Devices.id;
+    -os.id;
+6.exception_to_device
+    -applicationuser.id;
+    -exception.id;
+    -create-at;
+    -application.id;
+
+Base steps;
+request
+->get client-key
+->if(true):
+    ->json parse
+    ->get application name
+    ->check exception.body
+        if(true){
+            parse body.
+        }
+        else{
+            get data from other fields:massage,class,backtrace;
+        }
+    ->get User by Uid or create new.->register new exception with applicationuser.id,parent_exception.id(register new parent exception(table-exceptions))
+    ,application id(get by app name)
+    ->insert in to db
+    ->check feedback:
+    if(true)
+        ->send report;?
+
+
+
+
+
